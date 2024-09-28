@@ -1,9 +1,9 @@
 #include "subsystems.hpp"
 #include "lemlib/chassis/chassis.hpp"
 
-pros::MotorGroup left_motors({12, 5, 4}, pros::MotorGearset::blue);
+pros::MotorGroup right_motors({12, 5, 4}, pros::MotorGearset::blue);
 
-pros::MotorGroup right_motors({-15, -20, -1}, pros::MotorGearset::blue);
+pros::MotorGroup left_motors({-15, -20, -1}, pros::MotorGearset::blue);
 
 lemlib::Drivetrain drivetrain(
     &left_motors, // left motor group
@@ -61,9 +61,24 @@ lemlib::ControllerSettings angular_controller(
     0 // maximum acceleration (slew)
 );
 
-// create the chassis
 lemlib::Chassis chassis(drivetrain, // drivetrain settings
-                        lateral_controller, // lateral PID settings
-                        angular_controller, // angular PID settings
-                        sensors // odometry sensors
+    lateral_controller, // lateral PID settings
+    angular_controller, // angular PID settings
+    sensors // odometry sensors
 );
+
+pros::adi::DigitalOut arm('B');
+
+pros::adi::DigitalOut clamp('A');
+
+pros::adi::DigitalOut hang('C');
+
+pros::Motor intake(2);
+
+pros::Motor conveyor(13);
+
+pros::Motor rightArm(19);
+
+pros::Motor leftArm(14);
+
+pros::Optical optical(9);

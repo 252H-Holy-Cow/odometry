@@ -26,3 +26,19 @@ extern lemlib::ControllerSettings lateral_controller;
 extern lemlib::ControllerSettings angular_controller;
 
 extern lemlib::Chassis chassis;
+
+extern pros::adi::DigitalOut arm;
+
+extern pros::adi::DigitalOut clamp;
+
+extern pros::adi::DigitalOut hang;
+
+extern pros::Motor intake;
+
+extern pros::Motor conveyor;
+
+extern pros::Motor rightArm;
+
+extern pros::Motor leftArm;
+
+extern pros::Optical optical;
