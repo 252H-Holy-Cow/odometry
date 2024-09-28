@@ -18,35 +18,43 @@ enum status conveyorStatus;
 void task1(void *params) {
   while (1) {
     if (conveyorStatus == FORWARD) {
-      conveyor.move(127);
-      intake.move(127);
-      if (optical.get_hue() > color - 30 && optical.get_hue() < color + 30 &&
-          optical.get_proximity() <= 100 && load) {
-        pros::delay(50);
-        conveyor.move_velocity(-127);
-        pros::delay(700);
-        conveyor.move_velocity(127);
+      conveyor.move_velocity(190);
+      intake.move_velocity(200);
 
+      if (optical.get_hue() > color - 30 && 
+          optical.get_hue() < color + 30 &&
+          optical.get_proximity() <= 80 && 
+          load) {
+        conveyor.move_velocity(-200);
+        pros::delay(800);
       } else if (optical.get_hue() > color - 30 &&
                  optical.get_hue() < color + 30 &&
-                 optical.get_proximity() <= 100 && sort) {
-        pros::delay(220);
+                 optical.get_proximity() <= 80 && 
+                 sort) {
+        pros::delay(120);
         conveyor.move_velocity(0);
-        intake.move_velocity(0);
         pros::delay(200);
       }
     } else if (conveyorStatus == BACKWARD) {
-      conveyor.move(-127);
-      intake.move(-127);
+      conveyor.move_velocity(-200);
+      intake.move_velocity(-200);
     } else {
-      conveyor.move(0);
-      intake.move(0);
+      conveyor.move_velocity(0);
+      intake.move_velocity(0);
     }
 
     pros::delay(1);
   }
 }
 
+void task2(void *params) {
+  while(1){
+    pros::lcd::print(0, "heading: %f", imu.get_heading());
+    pros::lcd::print(1, "vertical: %f", vertical_encoder.get_position()*2*M_PI/36000);
+    pros::lcd::print(2, "horizontal: %f", horizontal_encoder.get_position()*2*M_PI/36000);
+    pros::delay(20);
+  }
+}
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -54,7 +62,10 @@ void task1(void *params) {
  * All other competition modes are blocked by initialize; it is recommended
  * to keep execution time for this mode under a few seconds.
  */
-void initialize() { pros::lcd::initialize(); }
+void initialize() { 
+  pros::lcd::initialize(); 
+  chassis.calibrate();
+  }
 
 /**
  * Runs while the robot is in the disabled state of Field Management System or
@@ -85,7 +96,10 @@ void competition_initialize() {}
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+  chassis.setPose(0, 0, 0);
+  chassis.turnToHeading(180, 10000);
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -105,6 +119,9 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 void opcontrol() {
   pros::Task taskA(task1, nullptr, TASK_PRIORITY_DEFAULT,
+                   TASK_STACK_DEPTH_DEFAULT, "task 1");
+
+  pros::Task taskB(task2, nullptr, TASK_PRIORITY_DEFAULT,
                    TASK_STACK_DEPTH_DEFAULT, "task 1");
 
   leftArm.set_brake_mode(MOTOR_BRAKE_HOLD);
@@ -159,20 +176,20 @@ void opcontrol() {
 
     // arm going up
     if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-      rightArm.move(-127);
-      leftArm.move(127);
+      rightArm.move_velocity(-127);
+      leftArm.move_velocity(127);
 
-    // arm going down
+      // arm going down
     } else if (controller.get_digital(DIGITAL_A)) {
-      leftArm.move(-100);
-      rightArm.move(100);
+      leftArm.move_velocity(-100);
+      rightArm.move_velocity(100);
 
-    // arm not moving
+      // arm not moving
     } else {
-      leftArm.move(0);
-      rightArm.move(0);
+      leftArm.move_velocity(0);
+      rightArm.move_velocity(0);
     }
 
-    pros::delay(10);
+    pros::delay(50);
   }
 }
