@@ -97,8 +97,56 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
+  //red
+  /*chassis.setPose(0, 0, 0);
+  chassis.moveToPoint(-11,-46.262,1200,{.forwards = false});
+  pros::delay(1200);
+  clamp.set_value(true);
+  conveyor.move_velocity(270);
+  intake.move_velocity(270);
+  chassis.moveToPoint(-20,-25,1500,{.forwards = true});
+  chassis.turnToHeading(0,500);
+  pros::delay(750);
+  clamp.set_value(false);
+  chassis.moveToPoint(-20,-35,900,{.forwards = false});
+  chassis.moveToPoint(-1,-32,1700,{.forwards = false});
+  pros::delay(1200);
+  clamp.set_value(true);
+  chassis.moveToPoint(-6.5,1,1500);
+  pros::delay(1000);
+  rightArm.move_velocity(-127);
+  leftArm.move_velocity(127);
+  chassis.moveToPoint(-46,10,2000);
+  pros::delay(2000);
+  rightArm.move_velocity(127);
+  leftArm.move_velocity(-127);
+  chassis.moveToPoint(-24,-30,2000,{.forwards = false});
+  */
+ //blue
   chassis.setPose(0, 0, 0);
-  chassis.turnToHeading(180, 10000);
+  chassis.moveToPoint(11,-46.262,1200,{.forwards = false});
+  pros::delay(1200);
+  clamp.set_value(true);
+  conveyor.move_velocity(270);
+  intake.move_velocity(270);
+  chassis.moveToPoint(20,-25,1500,{.forwards = true});
+  chassis.turnToHeading(0,500);
+  pros::delay(750);
+  clamp.set_value(false);
+  chassis.moveToPoint(20,-35,900,{.forwards = false});
+  chassis.moveToPoint(1,-32,1700,{.forwards = false});
+  pros::delay(1200);
+  clamp.set_value(true);
+  chassis.moveToPoint(6.5,1,1500);
+  pros::delay(1000);
+  rightArm.move_velocity(-127);
+  leftArm.move_velocity(127);
+  chassis.moveToPoint(46,10,2000);
+  pros::delay(2000);
+  rightArm.move_velocity(127);
+  leftArm.move_velocity(-127);
+  chassis.moveToPoint(24,-30,2000,{.forwards = false});
+
 }
 
 /**
@@ -169,7 +217,7 @@ void opcontrol() {
     }
 
     // hang
-    if (controller.get_digital_new_press(DIGITAL_X)) {
+    if (controller.get_digital_new_press(DIGITAL_B)) {
       hang.set_value(!hang_state);
       hang_state = !hang_state;
     }
