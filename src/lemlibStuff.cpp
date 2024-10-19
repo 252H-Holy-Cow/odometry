@@ -1,6 +1,5 @@
 #include "lemlibStuff.hpp"
 #include "prosStuff.hpp"
-#include "lemlib/chassis/chassis.hpp"
 
 lemlib::Drivetrain drivetrain(
     &left_motors, // left motor group
