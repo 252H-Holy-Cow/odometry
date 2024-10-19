@@ -1,9 +1,6 @@
-#include "subsystems.hpp"
+#include "lemlibStuff.hpp"
+#include "prosStuff.hpp"
 #include "lemlib/chassis/chassis.hpp"
-
-pros::MotorGroup right_motors({12, 5, 4}, pros::MotorGearset::blue);
-
-pros::MotorGroup left_motors({-15, -20, -1}, pros::MotorGearset::blue);
 
 lemlib::Drivetrain drivetrain(
     &left_motors, // left motor group
@@ -13,12 +10,6 @@ lemlib::Drivetrain drivetrain(
     450, // drivetrain rpm is 360
     2 // horizontal drift is 2 (for now)
 );
-
-pros::Imu imu(10);
-
-pros::Rotation horizontal_encoder(11);
-
-pros::Rotation vertical_encoder(3);
 
 lemlib::TrackingWheel horizontal_tracking_wheel(
     &horizontal_encoder,
@@ -66,19 +57,3 @@ lemlib::Chassis chassis(drivetrain, // drivetrain settings
     angular_controller, // angular PID settings
     sensors // odometry sensors
 );
-
-pros::adi::DigitalOut arm('B');
-
-pros::adi::DigitalOut clamp('A');
-
-pros::adi::DigitalOut hang('C');
-
-pros::Motor intake(2);
-
-pros::Motor conveyor(13);
-
-pros::Motor rightArm(19);
-
-pros::Motor leftArm(14);
-
-pros::Optical optical(9);
