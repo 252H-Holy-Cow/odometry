@@ -11,18 +11,20 @@ extern pros::Rotation vertical_encoder;
 
 extern pros::Imu imu;
 
-extern pros::adi::DigitalOut arm;
+extern pros::Motor intake;
+
+extern pros::Motor conveyor;
+
+extern pros::Motor arm;
+
+extern pros::Optical optical;
+
+extern pros::Rotation rotation;
+
+extern pros::adi::DigitalOut doinker;
 
 extern pros::adi::DigitalOut clamp;
 
 extern pros::adi::DigitalOut hang;
 
-extern pros::Motor intake;
-
-extern pros::Motor conveyor;
-
-extern pros::Motor rightArm;
-
-extern pros::Motor leftArm;
-
-extern pros::Optical optical;
+extern pros::adi::DigitalOut intakeLift;

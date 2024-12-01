@@ -2,58 +2,97 @@
 #include "lemlibStuff.hpp"
 #include "prosStuff.hpp"
 
-bool arm_state = false;
-bool sort = false;
-bool load = false;
 bool clamp_state = false;
 bool hang_state = false;
+bool doinker_state = false;
+bool intakeLift_state = false;
 
-int red = 30;
+int red = 20;
 int blue = 210;
 int color = red;
 
-enum status { FORWARD = 0, BACKWARD, STOP };
+const int DRIVE_SPEED = 110;
+const int TURN_SPEED = 90;
 
-enum status conveyorStatus;
+bool colorSort = false;
+bool load = false;
+
+bool loadPos = false;
+bool start = false;
+
+
+typedef enum { 
+  FORWARD = 0, 
+  BACKWARD, 
+  STOP 
+} status;
+
+status conveyorStatus;
 
 void task1(void *params) {
-  while (1) {
-    if (conveyorStatus == FORWARD) {
-      conveyor.move_velocity(190);
-      intake.move_velocity(200);
+  uint32_t now = pros::millis();
 
-      if (optical.get_hue() > color - 30 && 
-          optical.get_hue() < color + 30 &&
-          optical.get_proximity() <= 80 && 
-          load) {
-        conveyor.move_velocity(-200);
-        pros::delay(800);
-      } else if (optical.get_hue() > color - 30 &&
-                 optical.get_hue() < color + 30 &&
-                 optical.get_proximity() <= 80 && 
-                 sort) {
-        pros::delay(120);
-        conveyor.move_velocity(0);
-        pros::delay(200);
-      }
-    } else if (conveyorStatus == BACKWARD) {
+  while (true) {
+    if (conveyorStatus == FORWARD) 
+    {
+      conveyor.move_velocity(1000);
+    } 
+    else if (conveyorStatus == BACKWARD) 
+    {
       conveyor.move_velocity(-200);
-      intake.move_velocity(-200);
-    } else {
+    } 
+    else 
+    {
       conveyor.move_velocity(0);
-      intake.move_velocity(0);
     }
 
-    pros::delay(1);
+    pros::Task::delay_until(&now, 50);
+  }
+}
+
+void armPID(int target){
+  uint32_t now = pros::millis();
+
+  float kP = 0.02;
+
+  int error = target - rotation.get_position();
+  uint32_t startTime = pros::millis();
+
+  while (abs(error) > 50 && pros::millis()-startTime < 1000){
+    arm.move_velocity(kP*error);
+    error = target - rotation.get_position();
+    pros::Task::delay_until(&now, 2);
   }
 }
 
 void task2(void *params) {
+  uint32_t now = pros::millis();
+
+  while (true) {
+    printf("Tick Position: %d \n", rotation.get_position());
+    
+    // put arm in loading position
+    if (loadPos){
+      armPID(3500);
+      loadPos = false;
+      
+    } else if(start){
+      armPID(100);
+      start = false;
+    }
+    pros::Task::delay_until(&now, 50);
+  }
+}
+
+void task3(void *params) {
+  uint32_t now = pros::millis();
+
   while(1){
-    pros::lcd::print(0, "heading: %f", imu.get_heading());
-    pros::lcd::print(1, "vertical: %f", vertical_encoder.get_position()*2*M_PI/36000);
-    pros::lcd::print(2, "horizontal: %f", horizontal_encoder.get_position()*2*M_PI/36000);
-    pros::delay(20);
+    pros::lcd::print(2, "heading: %f", chassis.getPose().theta);
+    pros::lcd::print(3, "vertical: %f", chassis.getPose().y);
+    pros::lcd::print(4, "horizontal: %f", chassis.getPose().x);
+
+    pros::Task::delay_until(&now, 20);
   }
 }
 
@@ -98,8 +137,7 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
-  chassis.setPose(0, 0, 0);
-  chassis.turnToHeading(180, 10000);
+  chassis.moveToPoint(24, 24, 5000);
 }
 
 /**
@@ -123,10 +161,12 @@ void opcontrol() {
                    TASK_STACK_DEPTH_DEFAULT, "task 1");
 
   pros::Task taskB(task2, nullptr, TASK_PRIORITY_DEFAULT,
-                   TASK_STACK_DEPTH_DEFAULT, "task 1");
+                   TASK_STACK_DEPTH_DEFAULT, "task 2");
 
-  leftArm.set_brake_mode(MOTOR_BRAKE_HOLD);
-  rightArm.set_brake_mode(MOTOR_BRAKE_HOLD);
+  pros::Task taskC(task3, nullptr, TASK_PRIORITY_DEFAULT,
+                   TASK_STACK_DEPTH_DEFAULT, "task 3");
+
+  arm.set_brake_mode(MOTOR_BRAKE_HOLD);
   conveyor.set_brake_mode(MOTOR_BRAKE_BRAKE);
 
   // loop forever
@@ -149,46 +189,49 @@ void opcontrol() {
 
     // color sorting
     if (controller.get_digital_new_press(DIGITAL_LEFT)) {
-      sort = !sort;
+      colorSort = !colorSort;
     }
 
     // arm loading
     if (controller.get_digital_new_press(DIGITAL_DOWN)) {
-      load = !load;
-    }
+      chassis.moveToPoint(0, -26, 1000, {.forwards = false});
+      pros::delay(800);
+      clamp.set_value(true);
 
-    // mogo mech
-    if (controller.get_digital_new_press(DIGITAL_L2)) {
-      clamp.set_value(!clamp_state);
-      clamp_state = !clamp_state;
-    }
 
-    // corner clear
-    if (controller.get_digital_new_press(DIGITAL_Y)) {
-      arm.set_value(!arm_state);
-      arm_state = !arm_state;
-    }
 
-    // hang
-    if (controller.get_digital_new_press(DIGITAL_X)) {
-      hang.set_value(!hang_state);
-      hang_state = !hang_state;
     }
 
     // arm going up
     if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
-      rightArm.move_velocity(-127);
-      leftArm.move_velocity(127);
-
-      // arm going down
-    } else if (controller.get_digital(DIGITAL_A)) {
-      leftArm.move_velocity(-100);
-      rightArm.move_velocity(100);
-
-      // arm not moving
+      arm.move_velocity(200);
+    // arm not moving
     } else {
-      leftArm.move_velocity(0);
-      rightArm.move_velocity(0);
+      arm.move(0);
+    }
+
+    // mogo mech
+    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_L2)) {
+      clamp.set_value(!clamp_state);
+      clamp_state = !clamp_state;
+    }
+
+    // hang
+    if (controller.get_digital_new_press(DIGITAL_Y)) {
+      hang.set_value(!hang_state);
+      hang_state = !hang_state;
+    }
+
+    // doinker
+    if (controller.get_digital_new_press(DIGITAL_B)) {
+      doinker.set_value(!doinker_state);
+      doinker_state = !doinker_state;
+    }
+
+    // intake lift
+    if (controller.get_digital_new_press(DIGITAL_UP)) {
+      intakeLift.set_value(!intakeLift_state);
+      intakeLift_state = !intakeLift_state;
     }
 
     pros::delay(50);
