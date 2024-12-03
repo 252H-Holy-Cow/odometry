@@ -1,5 +1,8 @@
 #pragma once
+
 #include "api.h"
+
+extern pros::Controller controller;
 
 extern pros::MotorGroup left_motors;
 
@@ -28,3 +31,5 @@ extern pros::adi::DigitalOut clamp;
 extern pros::adi::DigitalOut hang;
 
 extern pros::adi::DigitalOut intakeLift;
+
+void initHardware();
