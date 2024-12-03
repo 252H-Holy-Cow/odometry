@@ -33,9 +33,10 @@ void redRush(){
   chassis.moveToPoint(-5, -2, 800, {.forwards = false});
 
   // diddle
-  chassis.moveToPoint(25, -30, 800);
+  chassis.moveToPoint(30, -30, 800, {.maxSpeed = 80});
   chassis.moveToPoint(-5, 0, 800, {.forwards = false});
-  chassis.moveToPoint(25, -30, 800);
+  pros::delay(200);
+  chassis.moveToPoint(30, -30, 800, {.maxSpeed = 80});
   chassis.moveToPoint(-5, 0, 800, {.forwards = false});
 
 

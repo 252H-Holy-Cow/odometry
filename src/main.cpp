@@ -51,8 +51,6 @@ void competition_initialize() {}
  */
 void autonomous() {
   redRush();
-  pros::Task taskD(autonColorSort, nullptr, TASK_PRIORITY_DEFAULT,
-                   TASK_STACK_DEPTH_DEFAULT, "task 4");
 }
 
 /**
