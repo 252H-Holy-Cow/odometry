@@ -15,3 +15,7 @@ extern int convVelocity;
 extern bool doColorSort;
 extern bool armToLoadPos;
 extern bool armToStartPos;
+
+void debugLoop(void* params);
+void conveyorLoop(void* params);
+void armLoop(void* params);
