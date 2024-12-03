@@ -10,13 +10,8 @@ typedef enum {
   STOP 
 } ConveyorDirection_e;
 
+extern ConveyorDirection_e convDir;
+extern int convVelocity;
 extern bool doColorSort;
 extern bool armToLoadPos;
 extern bool armToStartPos;
-
-extern ConveyorDirection_e convDir;
-
-void debugTask(void *params);
-void conveyorTask(void *params);
-void armTask(void *params);
-void autonColorSort(void *params);

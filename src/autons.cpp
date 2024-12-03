@@ -1,18 +1,17 @@
-#include "autons.hpp"
-
 #include "main.h"
 #include "lemlibStuff.hpp"
 #include "prosStuff.hpp"
 #include "tasks.hpp"
 
 ASSET(rr_corner1_txt);
-ASSET(rr_corner2_txt);
 
 void redRush(){
   // doink the mogo
   intakeLift.set_value(true);
   chassis.moveToPoint(-12, 31, 1100);
   pros::delay(700);
+  // convDir = FORWARD;
+  // convVelocity = 90;
   conveyor.move_velocity(90);
   pros::delay(200);
   doinker.set_value(true);
@@ -38,9 +37,6 @@ void redRush(){
   pros::delay(200);
   chassis.moveToPoint(30, -30, 800, {.maxSpeed = 80});
   chassis.moveToPoint(-5, 0, 800, {.forwards = false});
-
-
-
 }
 
 void blueRush(){

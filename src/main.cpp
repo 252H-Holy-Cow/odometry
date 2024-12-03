@@ -4,11 +4,6 @@
 #include "autons.hpp"
 #include "tasks.hpp"
 
-bool clamp_state = false;
-bool hang_state = false;
-bool doinker_state = false;
-bool intakeLift_state = false;
-
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *
@@ -50,6 +45,12 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {
+  convDir       = STOP;
+  convVelocity  = 600;
+  doColorSort   = true;
+  armToLoadPos  = false;
+  armToStartPos = false;
+
   redRush();
 }
 
@@ -67,15 +68,16 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
+  bool clamp_state      = false;
+  bool hang_state       = false;
+  bool doinker_state    = false;
+  bool intakeLift_state = false;
 
-  pros::Task taskA(debugTask, nullptr, TASK_PRIORITY_DEFAULT,
-                   TASK_STACK_DEPTH_DEFAULT, "task 1");
-
-  pros::Task taskB(conveyorTask, nullptr, TASK_PRIORITY_DEFAULT,
-                   TASK_STACK_DEPTH_DEFAULT, "task 2");
-
-  pros::Task taskC(armTask, nullptr, TASK_PRIORITY_DEFAULT,
-                   TASK_STACK_DEPTH_DEFAULT, "task 3");
+  convDir       = STOP;
+  convVelocity  = 600;
+  doColorSort   = true;
+  armToLoadPos  = false;
+  armToStartPos = false;
 
   // loop forever
   while (true) {
