@@ -50,12 +50,13 @@ void autonomous() {
   doColorSort   = true;
   armToLoadPos  = false;
   armToStartPos = false;
+  armToScorePos = false;
 
   pros::Task debugTask(debugLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 1");
   pros::Task converyortask(conveyorLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 2");
   pros::Task armTask(armLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 3");
 
-  redRush();
+  redSoloAWP();
 }
 
 /**
@@ -82,6 +83,7 @@ void opcontrol() {
   doColorSort   = true;
   armToLoadPos  = false;
   armToStartPos = false;
+  armToScorePos = false;
 
   pros::Task debugTask(debugLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 1");
   pros::Task converyortask(conveyorLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 2");
