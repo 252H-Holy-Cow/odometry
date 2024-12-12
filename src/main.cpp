@@ -47,6 +47,7 @@ void competition_initialize() {}
 void autonomous() {
   convDir       = STOP;
   convVelocity  = 600;
+  armTimeout    = 1000;
   doColorSort   = true;
   armToLoadPos  = false;
   armToStartPos = false;
@@ -72,6 +73,7 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
+
 void opcontrol() {
   bool clamp_state      = false;
   bool hang_state       = false;
@@ -80,6 +82,7 @@ void opcontrol() {
 
   convDir       = STOP;
   convVelocity  = 600;
+  armTimeout    = 1000;
   doColorSort   = true;
   armToLoadPos  = false;
   armToStartPos = false;
@@ -116,7 +119,7 @@ void opcontrol() {
     }
 
     // arm loading
-    if (controller.get_digital_new_press(DIGITAL_A)) {
+    if (controller.get_digital_new_press(DIGITAL_RIGHT)) {
       armToStartPos = !armToStartPos;
     }
 
