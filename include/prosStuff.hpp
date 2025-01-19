@@ -32,4 +32,6 @@ extern pros::adi::DigitalOut hang;
 
 extern pros::adi::DigitalOut intakeLift;
 
+extern pros::adi::DigitalOut rushMech;
+
 void initHardware();

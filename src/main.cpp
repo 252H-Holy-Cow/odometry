@@ -57,7 +57,7 @@ void autonomous() {
   pros::Task converyortask(conveyorLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 2");
   pros::Task armTask(armLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 3");
 
-  redSoloAWP();
+  autoSkills();
 }
 
 /**
@@ -79,6 +79,7 @@ void opcontrol() {
   bool hang_state       = false;
   bool doinker_state    = false;
   bool intakeLift_state = false;
+  bool rush_state       = false;
 
   convDir       = STOP;
   convVelocity  = 600;
@@ -95,9 +96,14 @@ void opcontrol() {
   // loop forever
   while (true) {
     int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-    int rightY = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
+    int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
 
-    chassis.tank(leftY, rightY);
+    chassis.arcade(leftY, rightX);
+
+    // int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
+    // int rightY = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
+
+    // chassis.tank(leftY, rightY);
 
     // intake and conveyor
     if (controller.get_digital(DIGITAL_R2)) {
@@ -137,12 +143,6 @@ void opcontrol() {
       clamp_state = !clamp_state;
     }
 
-    // hang
-    if (controller.get_digital_new_press(DIGITAL_Y)) {
-      hang.set_value(!hang_state);
-      hang_state = !hang_state;
-    }
-
     // doinker
     if (controller.get_digital_new_press(DIGITAL_B)) {
       doinker.set_value(!doinker_state);
@@ -153,6 +153,12 @@ void opcontrol() {
     if (controller.get_digital_new_press(DIGITAL_UP)) {
       intakeLift.set_value(!intakeLift_state);
       intakeLift_state = !intakeLift_state;
+    }
+
+    // rush mech
+    if (controller.get_digital_new_press(DIGITAL_X)) {
+      rushMech.set_value(!rush_state);
+      rush_state = !rush_state;
     }
 
     pros::delay(50);

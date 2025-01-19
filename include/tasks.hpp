@@ -7,7 +7,8 @@ constexpr int SORT_COLOUR = 210;
 typedef enum { 
   FORWARD = 0, 
   BACKWARD, 
-  STOP 
+  STOP,
+  FIRST
 } ConveyorDirection_e;
 
 extern ConveyorDirection_e convDir;

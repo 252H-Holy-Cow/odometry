@@ -13,7 +13,7 @@ bool armToScorePos          = false;
 static void armPID(int target){
   uint32_t now = pros::millis();
 
-  float kP = 0.022;
+  float kP = 0.0125;
 
   int error = target - rotation.get_position();
   uint32_t startTime = pros::millis();
@@ -47,21 +47,29 @@ void conveyorLoop(void *params) {
       && optical.get_hue() > SORT_COLOUR - 20 
       && optical.get_hue() < SORT_COLOUR + 20 
       && optical.get_proximity() > 240){
-        pros::Task::delay_until(&now, 15);
+        pros::Task::delay_until(&now, 60);
         conveyor.move_velocity(0);
         pros::Task::delay_until(&now, 600);
       }
       else{
         conveyor.move_velocity(convVelocity);
+        intake.move_velocity(convVelocity);
       }
     } 
     else if (convDir == BACKWARD) 
     {
       conveyor.move_velocity(-600);
+      intake.move_velocity(-600);
+    } 
+    else if (convDir == FIRST) 
+    {
+      conveyor.move_velocity(0);
+      intake.move_velocity(600);
     } 
     else 
     {
       conveyor.move_velocity(0);
+      intake.move_velocity(0);
     }
 
     pros::Task::delay_until(&now, 1);
@@ -76,7 +84,7 @@ void armLoop(void *params) {
     
     // put arm in loading position
     if (armToLoadPos){
-      armPID(3850);
+      armPID(3000);
       armToLoadPos = false;
       
     } else if(armToStartPos){
