@@ -2,7 +2,7 @@
 
 // 210 for blue
 // 20 for red
-constexpr int SORT_COLOUR = 210;
+constexpr int SORT_COLOUR = 20;
 
 typedef enum { 
   FORWARD = 0, 

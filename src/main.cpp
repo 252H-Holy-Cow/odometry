@@ -54,13 +54,13 @@ void autonomous() {
   armToStartPos = false;
   armToScorePos = false;
 
-  chassis.setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
+  chassis.setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
 
   pros::Task debugTask(debugLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 1");
   pros::Task converyortask(conveyorLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 2");
   pros::Task armTask(armLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 3");
 
-  redRush();
+  blueRush();
 }
 
 /**

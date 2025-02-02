@@ -47,9 +47,9 @@ void conveyorLoop(void *params) {
       && optical.get_hue() > SORT_COLOUR - 20 
       && optical.get_hue() < SORT_COLOUR + 20 
       && optical.get_proximity() > 240){
-        pros::Task::delay_until(&now, 60);
+        pros::Task::delay_until(&now, 125);
         conveyor.move_velocity(0);
-        pros::Task::delay_until(&now, 600);
+        pros::Task::delay_until(&now, 300);
       }
       else{
         conveyor.move_velocity(convVelocity);

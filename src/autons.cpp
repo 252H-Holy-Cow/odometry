@@ -6,74 +6,7 @@
 ASSET(rr_corner1_txt);
 
 void redRush(){
-  // // rush mogo
-  // intakeLift.set_value(true);
-  // doinker.set_value(true);
-  // convDir = FIRST;
-  // convVelocity = 600;
-  // conveyor.move_velocity(600);
-  // chassis.moveToPoint(-1.5, 33, 975);
-  // pros::delay(875);
-  // rushMech.set_value(true);
-
-  // // go back
-  // chassis.moveToPoint(2, 10, 1000, {.forwards = false});
-  // pros::delay(750);
-  // rushMech.set_value(false);
-  // pros::delay(150);
-  // doinker.set_value(false);
-
-  // // clamp mogo and score ring 1
-  // chassis.turnToHeading(195, 800);
-  // chassis.moveToPoint(5, 42, 2400, {.forwards = false, .maxSpeed=55});
-  // pros::delay(1200);
-  // clamp.set_value(true);
-  // convDir = STOP;
-  // convDir = FORWARD;
-  // pros::delay(1200);
-  // chassis.moveToPoint(4, 35, 800);
-  // chassis.turnToHeading(-60, 700);
-  // pros::delay(600);
-  // clamp.set_value(false);
-
-  // // get mogo 2
-  // chassis.turnToHeading(110, 700);
-  // chassis.moveToPoint(-28, 40, 500, {.forwards = false, .earlyExitRange=8});
-  // chassis.moveToPoint(-28, 35, 600, {.forwards = false, .maxSpeed=40});
-  // pros::delay(500);
-  // clamp.set_value(true);
-
-  // // go to corner
-  // chassis.turnToHeading(160, 700);
-  // chassis.moveToPoint(1, -14, 1000, {.maxSpeed=100});
-  // chassis.moveToPoint(1, -14, 1400, {.maxSpeed=50});
-  // chassis.moveToPoint(-5, 8, 1300, {.forwards=false});
-
-  // // ending
-  // chassis.turnToHeading(140, 700);
-  // pros::delay(1000);
-  // clamp.set_value(false);
-  // chassis.turnToHeading(230, 700);
-
-  // chassis.turnToHeading(15, 700);
-  // chassis.turnToHeading(45, 700);
-  // chassis.turnToHeading(90, 700);
-  // chassis.turnToHeading(180, 1000);
-  // chassis.turnToHeading(0, 1200);
-
-
-  chassis.moveToPoint(0, 24, 2500);
-  chassis.moveToPoint(0, 12, 2000, {.forwards=false});
-  chassis.moveToPoint(0, 0, 2000, {.forwards=false});
-  chassis.moveToPoint(0, 36, 2500);
-  chassis.moveToPoint(0, 24, 2000, {.forwards=false});
-  chassis.moveToPoint(0, 0, 2500, {.forwards=false});
-
-}
-
-void blueRush(){
   // rush mogo
-  intakeLift.set_value(true);
   doinker.set_value(true);
   convDir = FIRST;
   convVelocity = 600;
@@ -90,34 +23,83 @@ void blueRush(){
   doinker.set_value(false);
 
   // clamp mogo and score ring 1
-  chassis.turnToHeading(180, 800);
-  chassis.moveToPoint(4, 42, 2400, {.forwards = false, .maxSpeed=55});
+  chassis.turnToHeading(195, 800);
+  chassis.moveToPoint(5, 42, 2400, {.forwards = false, .maxSpeed=55});
   pros::delay(1200);
   clamp.set_value(true);
   convDir = STOP;
   convDir = FORWARD;
   pros::delay(1200);
-  chassis.moveToPoint(-2, 38, 800);
-  chassis.turnToHeading(90, 700);
+  chassis.moveToPoint(4, 35, 800);
+  chassis.turnToHeading(-60, 700);
   pros::delay(600);
   clamp.set_value(false);
 
   // get mogo 2
-  chassis.turnToHeading(-30, 700);
-  chassis.moveToPoint(15, 20, 1500, {.forwards = false, .maxSpeed=60});
-  pros::delay(1200);
+  chassis.turnToHeading(110, 700);
+  chassis.moveToPoint(-28, 40, 500, {.forwards = false, .earlyExitRange=8});
+  chassis.moveToPoint(-28, 35, 600, {.forwards = false, .maxSpeed=40});
+  pros::delay(500);
   clamp.set_value(true);
 
+  // go to corner
+  chassis.turnToHeading(160, 700);
+  chassis.moveToPoint(1, -14, 1000, {.maxSpeed=100});
+  chassis.moveToPoint(1, -14, 1400, {.maxSpeed=50});
+  chassis.moveToPoint(-5, 8, 1300, {.forwards=false});
+
+  // ending
+  chassis.turnToHeading(140, 700);
+  pros::delay(1000);
+  clamp.set_value(false);
+  chassis.turnToHeading(230, 700);
+
+
+}
+
+void blueRush(){
+  // rush mogo
+  doinker.set_value(true);
+  convDir = FIRST;
+  convVelocity = 600;
+  conveyor.move_velocity(600);
+  chassis.moveToPoint(1  , 34, 995);
+  pros::delay(900);
+  rushMech.set_value(true);
+
+  // go back
+  chassis.moveToPoint(-5, 15, 1000, {.forwards = false});
+  chassis.turnToHeading(-80, 500);
+  chassis.moveToPoint(10, 3, 700, {.forwards = false});
+  pros::delay(900);
+  rushMech.set_value(false);
+  pros::delay(300);
+  doinker.set_value(false);
+
+  // get mogo 2
+  chassis.turnToHeading(-120, 700);
+  chassis.moveToPoint(17, 20, 1500, {.forwards = false, .maxSpeed=60});
+  pros::delay(1000);
+  clamp.set_value(true);
+  convDir = STOP;
+  convDir = FORWARD;
+
   // get to corner
-  chassis.turnToHeading(-110, 700);
-  chassis.moveToPoint(-4, 16, 500, {.maxSpeed=100});
-  pros::delay(1200);
-  chassis.moveToPoint(-35, -1, 1400, {.maxSpeed=100});
+  chassis.turnToHeading(-120, 700);
+  chassis.moveToPoint(-10, 7, 800);
+  chassis.moveToPoint(-38, -7, 1300, {.maxSpeed=60});
+  chassis.moveToPoint(-40, -11, 600);
 
   // back up
-  chassis.moveToPoint(4, 18, 1500, {.forwards = false, .maxSpeed=50});
-  pros::delay(1500);
+  chassis.moveToPoint(-2, 0, 1200, {.forwards = false, .maxSpeed=50});
+  pros::delay(200);
+  armToLoadPos=true;
+  pros::delay(500);
+
+  // go to wallstake
   clamp.set_value(false);
+  chassis.turnToHeading(0, 700);
+  
 
 }
 
