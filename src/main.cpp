@@ -1,3 +1,4 @@
+#include "lemlib/api.hpp" // IWYU pragma: keep
 #include "main.h"
 #include "lemlibStuff.hpp"
 #include "prosStuff.hpp"
@@ -53,11 +54,13 @@ void autonomous() {
   armToStartPos = false;
   armToScorePos = false;
 
+  chassis.setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
+
   pros::Task debugTask(debugLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 1");
   pros::Task converyortask(conveyorLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 2");
   pros::Task armTask(armLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 3");
 
-  autoSkills();
+  redRush();
 }
 
 /**
@@ -89,6 +92,8 @@ void opcontrol() {
   armToStartPos = false;
   armToScorePos = false;
 
+  chassis.setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
+
   pros::Task debugTask(debugLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 1");
   pros::Task converyortask(conveyorLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 2");
   pros::Task armTask(armLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 3");
@@ -96,36 +101,31 @@ void opcontrol() {
   // loop forever
   while (true) {
     int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-    int rightX = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_X);
+    int rightY = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
 
-    chassis.arcade(leftY, rightX);
-
-    // int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-    // int rightY = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
-
-    // chassis.tank(leftY, rightY);
+    chassis.tank(leftY, rightY);
 
     // intake and conveyor
-    if (controller.get_digital(DIGITAL_R2)) {
+    if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
       convDir = FORWARD;
-    } else if (controller.get_digital(DIGITAL_R1)) {
+    } else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
       convDir = BACKWARD;
     } else {
       convDir = STOP;
     }
 
     // color sorting
-    if (controller.get_digital_new_press(DIGITAL_LEFT)) {
+    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_LEFT)) {
       doColorSort = !doColorSort;
     }
 
     // arm loading
-    if (controller.get_digital_new_press(DIGITAL_DOWN)) {
+    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)) {
       armToLoadPos = !armToLoadPos;
     }
 
     // arm loading
-    if (controller.get_digital_new_press(DIGITAL_RIGHT)) {
+    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
       armToStartPos = !armToStartPos;
     }
 
@@ -144,19 +144,19 @@ void opcontrol() {
     }
 
     // doinker
-    if (controller.get_digital_new_press(DIGITAL_B)) {
+    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_B)) {
       doinker.set_value(!doinker_state);
       doinker_state = !doinker_state;
     }
 
     // intake lift
-    if (controller.get_digital_new_press(DIGITAL_UP)) {
+    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_UP)) {
       intakeLift.set_value(!intakeLift_state);
       intakeLift_state = !intakeLift_state;
     }
 
     // rush mech
-    if (controller.get_digital_new_press(DIGITAL_X)) {
+    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)) {
       rushMech.set_value(!rush_state);
       rush_state = !rush_state;
     }

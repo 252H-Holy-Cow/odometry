@@ -2,33 +2,33 @@
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
-pros::MotorGroup right_motors({4, 2, 3}, pros::MotorGearset::blue);
+pros::MotorGroup right_motors({1, -2, 3}, pros::MotorGearset::blue);
 
-pros::MotorGroup left_motors({-20, -9, -7}, pros::MotorGearset::blue);
+pros::MotorGroup left_motors({-10, 9, -7}, pros::MotorGearset::blue);
 
-pros::Imu imu(19);
+pros::Imu imu(8);
 
-pros::Rotation horizontal_encoder(12);
+pros::Rotation horizontal_encoder(11);
 
-pros::Rotation vertical_encoder(-11);
+pros::Rotation vertical_encoder(12);
 
-pros::Motor conveyor(-10);
+pros::Motor conveyor(-5);
 
-pros::Motor intake(1);
+pros::Motor intake(6);
 
 pros::Motor arm(13);
 
-pros::Optical optical(6);
+pros::Optical optical(4);
 
-pros::Rotation rotation(8);
+pros::Rotation rotation(-20);
 
-pros::adi::DigitalOut doinker('B');
+pros::adi::DigitalOut doinker('G');
 
-pros::adi::DigitalOut clamp('A');
+pros::adi::DigitalOut clamp('E');
 
-pros::adi::DigitalOut intakeLift('C');
+pros::adi::DigitalOut intakeLift('H');
 
-pros::adi::DigitalOut rushMech('E');
+pros::adi::DigitalOut rushMech('F');
 
 void initHardware()
 {

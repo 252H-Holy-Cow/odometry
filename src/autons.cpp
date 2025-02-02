@@ -6,54 +6,69 @@
 ASSET(rr_corner1_txt);
 
 void redRush(){
-  // rush mogo
-  intakeLift.set_value(true);
-  doinker.set_value(true);
-  convDir = FIRST;
-  convVelocity = 600;
-  conveyor.move_velocity(600);
-  chassis.moveToPoint(-1.5, 33, 975);
-  pros::delay(875);
-  rushMech.set_value(true);
+  // // rush mogo
+  // intakeLift.set_value(true);
+  // doinker.set_value(true);
+  // convDir = FIRST;
+  // convVelocity = 600;
+  // conveyor.move_velocity(600);
+  // chassis.moveToPoint(-1.5, 33, 975);
+  // pros::delay(875);
+  // rushMech.set_value(true);
 
-  // go back
-  chassis.moveToPoint(2, 10, 1000, {.forwards = false});
-  pros::delay(750);
-  rushMech.set_value(false);
-  pros::delay(150);
-  doinker.set_value(false);
+  // // go back
+  // chassis.moveToPoint(2, 10, 1000, {.forwards = false});
+  // pros::delay(750);
+  // rushMech.set_value(false);
+  // pros::delay(150);
+  // doinker.set_value(false);
 
-  // clamp mogo and score ring 1
-  chassis.turnToHeading(195, 800);
-  chassis.moveToPoint(5, 42, 2400, {.forwards = false, .maxSpeed=55});
-  pros::delay(1200);
-  clamp.set_value(true);
-  convDir = STOP;
-  convDir = FORWARD;
-  pros::delay(1200);
-  chassis.moveToPoint(4, 35, 800);
-  chassis.turnToHeading(-60, 700);
-  pros::delay(600);
-  clamp.set_value(false);
+  // // clamp mogo and score ring 1
+  // chassis.turnToHeading(195, 800);
+  // chassis.moveToPoint(5, 42, 2400, {.forwards = false, .maxSpeed=55});
+  // pros::delay(1200);
+  // clamp.set_value(true);
+  // convDir = STOP;
+  // convDir = FORWARD;
+  // pros::delay(1200);
+  // chassis.moveToPoint(4, 35, 800);
+  // chassis.turnToHeading(-60, 700);
+  // pros::delay(600);
+  // clamp.set_value(false);
 
-  // get mogo 2
-  chassis.turnToHeading(110, 700);
-  chassis.moveToPoint(-28, 40, 500, {.forwards = false, .earlyExitRange=8});
-  chassis.moveToPoint(-28, 35, 600, {.forwards = false, .maxSpeed=40});
-  pros::delay(500);
-  clamp.set_value(true);
+  // // get mogo 2
+  // chassis.turnToHeading(110, 700);
+  // chassis.moveToPoint(-28, 40, 500, {.forwards = false, .earlyExitRange=8});
+  // chassis.moveToPoint(-28, 35, 600, {.forwards = false, .maxSpeed=40});
+  // pros::delay(500);
+  // clamp.set_value(true);
 
-  // go to corner
-  chassis.turnToHeading(160, 700);
-  chassis.moveToPoint(1, -14, 1000, {.maxSpeed=100});
-  chassis.moveToPoint(1, -14, 1400, {.maxSpeed=50});
-  chassis.moveToPoint(-5, 8, 1300, {.forwards=false});
+  // // go to corner
+  // chassis.turnToHeading(160, 700);
+  // chassis.moveToPoint(1, -14, 1000, {.maxSpeed=100});
+  // chassis.moveToPoint(1, -14, 1400, {.maxSpeed=50});
+  // chassis.moveToPoint(-5, 8, 1300, {.forwards=false});
 
-  // ending
-  chassis.turnToHeading(140, 700);
-  pros::delay(1000);
-  clamp.set_value(false);
-  chassis.turnToHeading(230, 700);
+  // // ending
+  // chassis.turnToHeading(140, 700);
+  // pros::delay(1000);
+  // clamp.set_value(false);
+  // chassis.turnToHeading(230, 700);
+
+  // chassis.turnToHeading(15, 700);
+  // chassis.turnToHeading(45, 700);
+  // chassis.turnToHeading(90, 700);
+  // chassis.turnToHeading(180, 1000);
+  // chassis.turnToHeading(0, 1200);
+
+
+  chassis.moveToPoint(0, 24, 2500);
+  chassis.moveToPoint(0, 12, 2000, {.forwards=false});
+  chassis.moveToPoint(0, 0, 2000, {.forwards=false});
+  chassis.moveToPoint(0, 36, 2500);
+  chassis.moveToPoint(0, 24, 2000, {.forwards=false});
+  chassis.moveToPoint(0, 0, 2500, {.forwards=false});
+
 }
 
 void blueRush(){

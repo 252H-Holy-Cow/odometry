@@ -13,7 +13,7 @@ bool armToScorePos          = false;
 static void armPID(int target){
   uint32_t now = pros::millis();
 
-  float kP = 0.0125;
+  float kP = 0.015;
 
   int error = target - rotation.get_position();
   uint32_t startTime = pros::millis();
@@ -84,7 +84,7 @@ void armLoop(void *params) {
     
     // put arm in loading position
     if (armToLoadPos){
-      armPID(3000);
+      armPID(3200);
       armToLoadPos = false;
       
     } else if(armToStartPos){
