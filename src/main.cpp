@@ -161,6 +161,11 @@ void opcontrol() {
       rush_state = !rush_state;
     }
 
+    // hang macro
+    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {
+      armToScorePos = !armToScorePos;
+    }
+
     pros::delay(50);
   }
 }

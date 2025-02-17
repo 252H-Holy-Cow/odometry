@@ -36,6 +36,8 @@ void initHardware()
     rotation.reset_position();
     optical.set_led_pwm(50);
 
+    optical.set_integration_time(10);
+
     arm.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
     conveyor.set_brake_mode(pros::E_MOTOR_BRAKE_BRAKE);
 }

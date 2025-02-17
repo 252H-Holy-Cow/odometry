@@ -14,9 +14,11 @@ typedef enum {
 extern ConveyorDirection_e convDir;
 extern int convVelocity;
 extern int armTimeout;
+extern int jamTimeout;
 extern bool doColorSort;
 extern bool armToLoadPos;
 extern bool armToStartPos;
+extern bool armToScore;
 extern bool armToScorePos;
 
 void debugLoop(void* params);

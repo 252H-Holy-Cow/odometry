@@ -5,10 +5,12 @@
 ConveyorDirection_e convDir = STOP;
 int convVelocity            = 0;
 int armTimeout              = 0;
+int jamTimeout              = 0;
 bool doColorSort            = false;
 bool armToLoadPos           = false;
 bool armToStartPos          = false;
 bool armToScorePos          = false;
+bool armToScore             = false;
 
 static void armPID(int target){
   uint32_t now = pros::millis();
@@ -47,11 +49,21 @@ void conveyorLoop(void *params) {
       && optical.get_hue() > SORT_COLOUR - 20 
       && optical.get_hue() < SORT_COLOUR + 20 
       && optical.get_proximity() > 240){
-        pros::Task::delay_until(&now, 125);
+        pros::Task::delay_until(&now, 140);
         conveyor.move_velocity(0);
         pros::Task::delay_until(&now, 300);
       }
-      else{
+
+      // else if (abs(conveyor.get_actual_velocity())<=1.0){
+      //   pros::Task::delay_until(&now, 500);
+      //   if (abs(conveyor.get_actual_velocity())<=1.0 && rotation.get_position()>3500 && rotation.get_position()<4500){
+      //     conveyor.move_velocity(-600);
+      //     pros::Task::delay_until(&now, 100);
+      //     conveyor.move_velocity(600);
+      //   }
+      // }
+      
+      else {
         conveyor.move_velocity(convVelocity);
         intake.move_velocity(convVelocity);
       }
@@ -84,16 +96,20 @@ void armLoop(void *params) {
     
     // put arm in loading position
     if (armToLoadPos){
-      armPID(3200);
+      armPID(3800);
       armToLoadPos = false;
       
     } else if(armToStartPos){
       armPID(100);
       armToStartPos = false;
 
-    } else if(armToScorePos){
+    } else if(armToScore){
       armPID(22000);
-      armToStartPos = false;
+      armToScore = false;
+
+    } else if(armToScorePos){
+      armPID(13250);
+      armToScorePos = false;
     }
 
     pros::Task::delay_until(&now, 50);
