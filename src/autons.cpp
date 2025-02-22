@@ -309,21 +309,23 @@ void redRing(){
 
 void blueRing(){
   // score alliance stake
-  convDir = FORWARD;
   armToLoadPos = true;
-  convVelocity = 180;
-  pros::delay(900);
-  chassis.moveToPoint(0, 8, 600);
-  convVelocity = 0;
   pros::delay(100);
+  convDir = FORWARD;
+  convVelocity = 600;
+  // pros::delay(300);
+  chassis.moveToPoint(0, 4.5, 650);
+  pros::delay(600);
   armToLoadPos = false;
+  pros::delay(200);
+  convVelocity = 0;
   armToScore = true;
 
   // get first mogo 
-  pros::delay(900);
+  pros::delay(1200);
   armToScore = false;
-  chassis.moveToPoint(0, -25, 540, {.forwards = false});
-  chassis.moveToPoint(1, -29, 700, {.forwards = false, .maxSpeed=50});
+  chassis.moveToPoint(0, -27, 450, {.forwards = false});
+  chassis.moveToPoint(1, -31, 700, {.forwards = false, .maxSpeed=50});
   convDir = STOP;
   armToStartPos = true;
   pros::delay(700);
@@ -332,22 +334,25 @@ void blueRing(){
 
   // get ring 1 2
   chassis.turnToHeading(-160, 700);
+
+  chassis.moveToPoint(-7, -49, 650, {.earlyExitRange = 8});
   convDir = FORWARD;
-  chassis.moveToPoint(-7, -50, 800);
-  chassis.turnToHeading(-115, 300);
-  chassis.moveToPoint(-16.5, -57, 800);
-  chassis.moveToPoint(-10, -50, 800, {.forwards = false});
+  // chassis.turnToHeading(115, 300);
+  chassis.moveToPoint(-26, -62, 1250, {.maxSpeed=75});
+  pros::delay(400);
 
   // get ring 3
-  chassis.turnToHeading(-45, 500);
-  chassis.moveToPoint(-24, -38, 600, {.maxSpeed=80});
-  pros::delay(800);
+  chassis.moveToPoint(-10, -50, 800, {.forwards = false});
+  chassis.turnToHeading(-50, 550, {.direction=lemlib::AngularDirection::CCW_COUNTERCLOCKWISE});
+  chassis.moveToPoint(-25, -38, 600, {.maxSpeed=80});
+  pros::delay(500);
 
   // get corner ring
-  chassis.moveToPoint(-26, -44, 600, {.forwards = false, .maxSpeed = 100});
-  pros::delay(200);
-  chassis.moveToPoint(-67, -10, 700);
-  chassis.moveToPoint(-68, -25, 1200);
+  // chassis.moveToPoint(26, -48, 800, {.forwards = false, .maxSpeed = 50});
+  // pros::delay(200);
+  // chassis.moveToPoint(15, -30, 700);
+  chassis.moveToPoint(-68, -5, 1500, {.maxSpeed=20});
+  chassis.moveToPoint(-68, -5, 1000, {.maxSpeed=80});
   pros::delay(400);
   chassis.moveToPoint(-41, -12, 900, {.forwards = false, .maxSpeed = 40});
 
@@ -357,8 +362,8 @@ void blueRing(){
   pros::delay(125);
   intakeLift.set_value(true);
   chassis.moveToPoint(6, -1, 900, {.maxSpeed = 40});
-  chassis.moveToPoint(-7, -3, 1500, {.forwards = false, .maxSpeed = 25});
-  pros::delay(300);
+  chassis.moveToPoint(-7, -3, 1500, {.forwards = false, .maxSpeed = 45});
+  // pros::delay(300);
   intakeLift.set_value(false);
 }
 
