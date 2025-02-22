@@ -60,7 +60,7 @@ void autonomous() {
   pros::Task converyortask(conveyorLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 2");
   pros::Task armTask(armLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 3");
 
-  blueRush();
+  redRing();
 }
 
 /**
@@ -122,17 +122,31 @@ void opcontrol() {
     // arm loading
     if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_DOWN)) {
       armToLoadPos = !armToLoadPos;
+      armToStartPos = false;
+      armToScorePos = false;
     }
 
     // arm loading
     if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_RIGHT)) {
       armToStartPos = !armToStartPos;
+      armToLoadPos = false;
+      armToScorePos = false;
+    }
+
+    // hang macro
+    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {
+      armToScorePos = !armToScorePos;
+      armToLoadPos = false;
+      armToStartPos = false;
     }
 
     // arm going up
     if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_L1)) {
       arm.move_velocity(200);
-    // arm not moving
+      armToScorePos = false;
+      armToLoadPos = false;
+      armToStartPos = false;
+      armToScore = false;
     } else {
       arm.move(0);
     }
@@ -159,11 +173,6 @@ void opcontrol() {
     if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_X)) {
       rushMech.set_value(!rush_state);
       rush_state = !rush_state;
-    }
-
-    // hang macro
-    if (controller.get_digital_new_press(pros::E_CONTROLLER_DIGITAL_Y)) {
-      armToScorePos = !armToScorePos;
     }
 
     pros::delay(50);

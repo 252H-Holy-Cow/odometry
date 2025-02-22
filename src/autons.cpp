@@ -1,3 +1,4 @@
+#include "lemlib/chassis/chassis.hpp"
 #include "main.h"
 #include "lemlibStuff.hpp"
 #include "prosStuff.hpp"
@@ -52,34 +53,6 @@ void redRush(){
   // get mogo 2
   chassis.turnToHeading(275, 700);
 
-  
-  // intakeLift.set_value(true);
-  // chassis.moveToPoint(4, -16, 600, {.maxSpeed=60});
-
-  // // back up and go into corner again
-  // chassis.moveToPoint(-5, 8, 1500, {.forwards=false, .maxSpeed=30});
-  // pros::delay(600);
-  // intakeLift.set_value(false);
-  // pros::delay(300);
-  // chassis.moveToPoint(5, -16, 1200);
-
-  // // again
-  // chassis.moveToPoint(-5, 8, 1500, {.forwards=false, .maxSpeed=30});
-  // pros::delay(1300);
-  // clamp.set_value(false);
-  // convDir = STOP;
-
-  // get other mogo again
-  /*
-  chassis.moveToPoint(5, -16, 1200);
-  chassis.moveToPoint(11, 24, 3000, {.forwards=false, .maxSpeed=60});
-  pros::delay(1500);
-  clamp.set_value(true);
-  convDir = FORWARD;
-  */
-
-  
-
 
 
 
@@ -129,28 +102,11 @@ void blueRush(){
   doinker.set_value(false);
 
 
-
-  // // leave corner and go back
-  // chassis.moveToPoint(-6, 6, 900, {.forwards = false, .maxSpeed=40});
-  // pros::delay(500);
-  // intakeLift.set_value(false);
-  // pros::delay(200);
-  // chassis.moveToPoint(-40, -8, 500);
-  // chassis.moveToPoint(-48, -19, 500);
-
   // back up
   chassis.moveToPoint(-6, 8, 800, {.forwards = false, .maxSpeed=50});
   pros::delay(500);
   clamp.set_value(false);
   chassis.turnToHeading(220, 600);
-  // chassis.turnToHeading(-135, 700);
-  // // armToLoadPos=true;
-  // chassis.moveToPoint(-10, 24, 500, {.forwards=false, .earlyExitRange=8});
-  // chassis.moveToPoint(-3, 28, 900, {.forwards=false, .maxSpeed=40});
-
-  // // clamp mogo
-  // pros::delay(850);
-  // clamp.set_value(true);
   chassis.moveToPoint(-3, 34, 1200, {.forwards = false, .maxSpeed=60});
   pros::delay(1150);
   clamp.set_value(true);
@@ -161,18 +117,21 @@ void blueRush(){
 
 }
 
-void redWP(){
+void redSAWP(){
   // score alliance stake
   convDir = FORWARD;
   armToLoadPos = true;
+  pros::delay(100);
   convVelocity = 180;
   pros::delay(900);
   chassis.moveToPoint(0, 8, 600);
   convVelocity = 0;
   pros::delay(100);
+  armToLoadPos = false;
+  pros::delay(200);
   armToScore = true;
 
-  // // get first mogo 
+  // get first mogo 
   pros::delay(900);
   armToScore = false;
   chassis.moveToPoint(0, -25, 500, {.forwards = false});
@@ -196,26 +155,38 @@ void redWP(){
   chassis.moveToPoint(24, -38, 600, {.maxSpeed=80});
   pros::delay(800);
 
-  // get corner ring
-  chassis.moveToPoint(64, -10, 700);
-  chassis.moveToPoint(66, -7, 200);
-  chassis.moveToPoint(70, 20, 500);
-  pros::delay(400);
-  chassis.moveToPoint(41, -12, 900, {.forwards = false, .maxSpeed = 40});
+  // get ring 4
+  doColorSort = false;
+  chassis.moveToPoint(-7, -4, 700);
+  pros::delay(850);
+  clamp.set_value(false);
+  chassis.moveToPoint(-28, 4, 1000);
 
-  // get middle ring
-  chassis.turnToHeading(255, 700);
-  chassis.moveToPoint(-11, -34, 600);
-  chassis.moveToPoint(-11, -34, 2000, {.maxSpeed=30});
-  arm.move_velocity(60);
-  pros::delay(1000);
+  // get mogo
+  chassis.moveToPoint(-60, 2, 1200);
+  pros::delay(1520);
+  convVelocity = 0;
+  pros::delay(300);
+  chassis.turnToHeading(-65, 400);
+  chassis.moveToPoint(-45, -11, 1000, {.forwards = false, .maxSpeed=80});
+  pros::delay(900);
+  clamp.set_value(true);
+
+  // touch ladder
+  pros::delay(200);
+  convVelocity = 600;
+  chassis.turnToHeading(165, 1000, {.maxSpeed = 80});
+  armToStartPos = false;
+  pros::delay(200);
+  arm.move_velocity(70);
+
 
 
 
 
 }
 
-void blueWP(){
+void blueSAWP(){
   // score alliance stake
   convDir = FORWARD;
   armToLoadPos = true;
@@ -224,6 +195,7 @@ void blueWP(){
   chassis.moveToPoint(0, 8, 600);
   convVelocity = 0;
   pros::delay(100);
+  armToLoadPos = false;
   armToScore = true;
 
   // get first mogo 
@@ -250,38 +222,50 @@ void blueWP(){
   chassis.moveToPoint(-24, -38, 600, {.maxSpeed=80});
   pros::delay(800);
 
-  // get corner ring
-  chassis.moveToPoint(-64, -10, 700);
-  chassis.moveToPoint(-66, -7, 200);
-  chassis.moveToPoint(-70, 20, 500);
-  pros::delay(400);
-  chassis.moveToPoint(-41, -12, 900, {.forwards = false, .maxSpeed = 40});
+  // get ring 4
+  doColorSort = false;
+  chassis.moveToPoint(7, -4, 700);
+  pros::delay(850);
+  clamp.set_value(false);
+  chassis.moveToPoint(28, 4, 1000);
 
-  // get middle ring
-  chassis.turnToHeading(255, 700);
-  chassis.moveToPoint(11, -34, 600);
-  chassis.moveToPoint(11, -34, 2000, {.maxSpeed=30});
-  arm.move_velocity(60);
-  pros::delay(1000);
+  // get mogo mech and touch ladder
+  chassis.moveToPoint(60, 2, 1200);
+  pros::delay(1520);
+  convVelocity = 0;
+  pros::delay(300);
+  chassis.turnToHeading(65, 400);
+  chassis.moveToPoint(41, -12, 1000, {.forwards = false, .maxSpeed=80});
+  pros::delay(900);
+  clamp.set_value(true);
+  pros::delay(200);
+  convVelocity = 600;
+  chassis.turnToHeading(-165, 1000, {.maxSpeed = 80});
+  pros::delay(200);
+  arm.move_velocity(65);
+  
 
 }
 
 void redRing(){
   // score alliance stake
-  convDir = FORWARD;
   armToLoadPos = true;
-  convVelocity = 180;
-  pros::delay(900);
-  chassis.moveToPoint(0, 8, 600);
-  convVelocity = 0;
   pros::delay(100);
+  convDir = FORWARD;
+  convVelocity = 600;
+  // pros::delay(300);
+  chassis.moveToPoint(0, 4.5, 650);
+  pros::delay(600);
+  armToLoadPos = false;
+  pros::delay(200);
+  convVelocity = 0;
   armToScore = true;
 
   // get first mogo 
-  pros::delay(900);
+  pros::delay(1200);
   armToScore = false;
-  chassis.moveToPoint(0, -25, 540, {.forwards = false});
-  chassis.moveToPoint(-1, -29, 700, {.forwards = false, .maxSpeed=50});
+  chassis.moveToPoint(0, -27, 450, {.forwards = false});
+  chassis.moveToPoint(-1, -31, 700, {.forwards = false, .maxSpeed=50});
   convDir = STOP;
   armToStartPos = true;
   pros::delay(700);
@@ -290,22 +274,25 @@ void redRing(){
 
   // get ring 1 2
   chassis.turnToHeading(160, 700);
+
+  chassis.moveToPoint(7, -49, 650, {.earlyExitRange = 8});
   convDir = FORWARD;
-  chassis.moveToPoint(7, -50, 800);
-  chassis.turnToHeading(115, 300);
-  chassis.moveToPoint(16.5, -57, 800);
-  chassis.moveToPoint(10, -50, 800, {.forwards = false});
+  // chassis.turnToHeading(115, 300);
+  chassis.moveToPoint(26, -62, 1250, {.maxSpeed=75});
+  pros::delay(400);
 
   // get ring 3
-  chassis.turnToHeading(-45, 500);
-  chassis.moveToPoint(24, -38, 600, {.maxSpeed=80});
-  pros::delay(800);
+  chassis.moveToPoint(10, -50, 800, {.forwards = false});
+  chassis.turnToHeading(50, 550, {.direction=lemlib::AngularDirection::CCW_COUNTERCLOCKWISE});
+  chassis.moveToPoint(25, -38, 600, {.maxSpeed=80});
+  pros::delay(500);
 
   // get corner ring
-  chassis.moveToPoint(26, -44, 600, {.forwards = false, .maxSpeed = 100});
-  pros::delay(200);
-  chassis.moveToPoint(67, -10, 700);
-  chassis.moveToPoint(68, -25, 1200);
+  // chassis.moveToPoint(26, -48, 800, {.forwards = false, .maxSpeed = 50});
+  // pros::delay(200);
+  // chassis.moveToPoint(15, -30, 700);
+  chassis.moveToPoint(68, -5, 1500, {.maxSpeed=20});
+  chassis.moveToPoint(68, -5, 1000, {.maxSpeed=80});
   pros::delay(400);
   chassis.moveToPoint(41, -12, 900, {.forwards = false, .maxSpeed = 40});
 
@@ -315,8 +302,8 @@ void redRing(){
   pros::delay(125);
   intakeLift.set_value(true);
   chassis.moveToPoint(-6, -1, 900, {.maxSpeed = 40});
-  chassis.moveToPoint(7, -3, 1500, {.forwards = false, .maxSpeed = 25});
-  pros::delay(300);
+  chassis.moveToPoint(7, -3, 1500, {.forwards = false, .maxSpeed = 45});
+  // pros::delay(300);
   intakeLift.set_value(false);
 }
 
@@ -329,6 +316,7 @@ void blueRing(){
   chassis.moveToPoint(0, 8, 600);
   convVelocity = 0;
   pros::delay(100);
+  armToLoadPos = false;
   armToScore = true;
 
   // get first mogo 
@@ -404,6 +392,7 @@ void autoSkills(){
   chassis.moveToPoint(70, 59.5, 600);   
   pros::delay(1200);
   convVelocity = 0;
+  armToLoadPos = false;
   armToScore = true;
 
   // get rings 4 5 6
@@ -451,6 +440,7 @@ void autoSkills(){
   chassis.moveToPoint(-70, 60, 600);
   pros::delay(1400);
   convVelocity = 0;
+  armToLoadPos = false;
   armToScore = true;
 
   // get rings 11 12 13
