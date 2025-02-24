@@ -3,6 +3,7 @@
 #include "lemlibStuff.hpp"
 #include "prosStuff.hpp"
 #include "autons.hpp"
+#include "skills.hpp"
 #include "tasks.hpp"
 
 /**
@@ -60,7 +61,7 @@ void autonomous() {
   pros::Task converyortask(conveyorLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 2");
   pros::Task armTask(armLoop, nullptr, TASK_PRIORITY_DEFAULT, TASK_STACK_DEPTH_DEFAULT, "task 3");
 
-  blueRing();
+  skillsAuton();
 }
 
 /**
