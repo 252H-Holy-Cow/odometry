@@ -103,7 +103,7 @@ void armLoop(void *params) {
       armPID(100);
 
     } else if(armToScore){
-      armPID(22000);
+      armPID(18000); //22
       armToScore = false;
 
     } else if(armToScorePos){

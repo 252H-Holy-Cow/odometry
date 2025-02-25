@@ -5,16 +5,19 @@
 #include "tasks.hpp"
 
 void skillsAuton(){
+  //chassis.turnToHeading(90, 5000);
+  //chassis.moveToPoint(0,50,2000,{.minSpeed = 50, .earlyExitRange = 1});
+  //chassis.moveToPose(0, 60, 0, 5000);
     // score alliance stake
     doColorSort = false;
     chassis.setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
     convDir = FORWARD;
     convVelocity = 600;
     pros::delay(300);
-    chassis.moveToPoint(0, 12, 800, {.maxSpeed = 80});
+    chassis.moveToPoint(0, 13.5, 2000); //800
   
     // // get first mogo
-    chassis.turnToHeading(-88, 700);
+    chassis.turnToHeading(-90, 2000); //700
     convVelocity = 0;
     chassis.moveToPoint(11, 14, 1000, {.forwards = false, .minSpeed = 50, .earlyExitRange = 1});
     chassis.moveToPoint(20, 14, 750, {.forwards = false, .maxSpeed = 30});
@@ -22,18 +25,19 @@ void skillsAuton(){
     clamp.set_value(true);
   
     // // get rings 1 2
-    chassis.turnToHeading(7, 800);
+    chassis.turnToHeading(7, 2000); //800
     chassis.moveToPoint(23.5, 32, 2000, {.minSpeed = 50, .earlyExitRange = 1});
     convVelocity = 600;
-    chassis.moveToPose(33, 45, 45, 4000, {.minSpeed = 50, .earlyExitRange = 1});
-    //chassis.moveToPoint(33, 48, 2000, {.minSpeed = 50, .earlyExitRange = 1});
-    chassis.moveToPoint(48, 85, 2000);
+    chassis.moveToPoint(35, 50, 2000, {.maxSpeed = 60, .minSpeed = 30, .earlyExitRange = 1});
+    chassis.moveToPoint(48, 85, 2000, {.maxSpeed = 80});
    
     // ring 3 wallstake
-    chassis.moveToPoint(44, 63, 2000, {.forwards = false});
-    chassis.turnToHeading(89, 2000);
+
+    chassis.moveToPoint(45.7, 71, 2000, {.forwards = false, .minSpeed = 50, .earlyExitRange = 1});
+    chassis.moveToPose(44, 61, 10, 2000, {.forwards = false});
+    chassis.turnToHeading(90, 2000);
     armToLoadPos = true;
-    chassis.moveToPoint(60, 62, 2000,{.minSpeed = 80, .earlyExitRange = 1});
+    chassis.moveToPoint(60, 62, 2000,{.minSpeed = 65, .earlyExitRange = 1});
     pros::delay(2000);
     convVelocity = 0;
     armToLoadPos = false;
@@ -44,38 +48,61 @@ void skillsAuton(){
     armToStartPos = true;
   
     // // get rings 4 5 6
-    // chassis.moveToPoint(50, 59.5, 850, {.forwards = false});
-    // chassis.turnToHeading(180, 700);
-    // chassis.moveToPoint(51, 4, 400);
-    // chassis.moveToPoint(51, 2, 1200, {.maxSpeed = 60});
-    // chassis.moveToPoint(51, 0, 1200, {.maxSpeed = 50});
+    chassis.moveToPoint(50, 62, 2000, {.forwards = false});
+    chassis.turnToHeading(180, 2000);
+    chassis.moveToPoint(51, 20, 400);
+    chassis.moveToPoint(51, 10, 1200, {.maxSpeed = 60});
+    chassis.moveToPoint(51, 3, 1200, {.maxSpeed = 50});
   
     // // get ring 7 and put mogo in corner
-    // chassis.turnToHeading(35, 700);
-    // chassis.moveToPoint(65, 19, 1000);
-    // chassis.turnToHeading(-45, 700);
-    // chassis.moveToPoint(72, -2, 600, {.forwards = false});
-    // pros::delay(500);
-    // clamp.set_value(false);
+    chassis.turnToHeading(55, 2000);
+    chassis.moveToPoint(61, 12, 1000);
+    chassis.turnToHeading(-30, 700);
+    chassis.moveToPoint(63.5, 4.5, 2000, {.forwards = false});
+    pros::delay(500);
+    clamp.set_value(false);
+    convVelocity = 0;
     // pros::delay(100);
     // arm.move_velocity(0);
     
     // // get second mogo
-    // chassis.moveToPoint(54, 12, 500);
-    // chassis.turnToHeading(90, 600);
-    // chassis.moveToPoint(-22, 11, 1000, {.forwards = false, .maxSpeed = 100});
-    // chassis.moveToPoint(-32, 11, 1000, {.forwards = false, .maxSpeed = 30});
+    chassis.moveToPoint(56.5, 12.5, 2000);
+    chassis.turnToHeading(90, 2000);
+    chassis.moveToPoint(15, 12, 2000, {.forwards = false, .minSpeed = 50, .earlyExitRange = 1});
+    chassis.moveToPose(-10, 12, 90, 2000, {.forwards = false});
+    chassis.moveToPoint(-23, 12, 2000, {.forwards = false, .maxSpeed = 30});
+    pros::delay(800);
+    clamp.set_value(true);
+    pros::delay(200);
     // pros::delay(950);
     // clamp.set_value(true);
-  
-  
-    // // get rings 8 9
+
+    // get rings 8 9
+    chassis.swingToHeading(-38, DriveSide::LEFT, 4000);
+    convVelocity = 600;
+    chassis.moveToPoint(-22, 35, 2000, {.minSpeed = 50, .earlyExitRange = 1});
+    chassis.moveToPoint(-39, 68, 2000,{.maxSpeed = 90, .minSpeed = 50, .earlyExitRange = 1});
+    chassis.moveToPose(-43, 83, -15, 2000);
+
     // chassis.turnToHeading(7, 500);
     // chassis.moveToPoint(-22, 39, 400, {.earlyExitRange = 10});
     // chassis.moveToPoint(-40, 50, 650, {.earlyExitRange = 8});
     // chassis.moveToPoint(-44, 83, 800);
   
-    // // wallstake ring 10
+    // wallstake ring 10
+    chassis.moveToPoint(-40.7, 69, 2000, {.forwards = false, .minSpeed = 50, .earlyExitRange = 1});
+    chassis.moveToPose(-39, 59, -10, 2000, {.forwards = false});
+    chassis.turnToHeading(-90, 2000);
+    armToLoadPos = true;
+    chassis.moveToPoint(-60, 60, 2000,{.minSpeed = 65, .earlyExitRange = 1});
+    pros::delay(2000);
+    convVelocity = 0;
+    armToLoadPos = false;
+    armToScore = true;
+    pros::delay(800);
+    convVelocity = 600;
+    armToScore = false;
+    armToStartPos = true;
     // chassis.turnToHeading(-160, 500);
     // chassis.moveToPoint(-51, 60, 1400, {.maxSpeed = 100});
     // armToLoadPos = true;
@@ -86,7 +113,12 @@ void skillsAuton(){
     // armToLoadPos = false;
     // armToScore = true;
   
-    // // get rings 11 12 13
+    // get rings 11 12 13
+    chassis.moveToPoint(-44, 60, 2000, {.forwards = false});
+    chassis.turnToHeading(180, 2000);
+    chassis.moveToPoint(-45, 18, 400);
+    chassis.moveToPoint(-45, 8, 1200, {.maxSpeed = 60});
+    chassis.moveToPoint(-45, 1, 1200, {.maxSpeed = 50});
     // pros::delay(800);
     // // chassis.moveToPoint(70, 69, 300);
     // chassis.moveToPoint(-40, 60, 850, {.forwards = false});
@@ -100,6 +132,13 @@ void skillsAuton(){
     // chassis.moveToPoint(-44, 4, 1200, {.maxSpeed = 30});
   
     // // get ring 14 and put mogo in corner
+    chassis.turnToHeading(-55, 2000);
+    chassis.moveToPoint(-57, 10, 1000);
+    chassis.turnToHeading(30, 700);
+    chassis.moveToPoint(-59, 2.5, 2000, {.forwards = false});
+    pros::delay(500);
+    clamp.set_value(false);
+    convVelocity = 0;
     // arm.move_velocity(0);
     // chassis.turnToHeading(-45, 700);
     // chassis.moveToPoint(-57, 15, 1300);
