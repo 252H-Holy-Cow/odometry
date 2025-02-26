@@ -114,11 +114,11 @@ void skillsAuton(){
     // armToScore = true;
   
     // get rings 11 12 13
-    chassis.moveToPoint(-44, 60, 2000, {.forwards = false});
+    chassis.moveToPoint(-45, 60, 2000, {.forwards = false});
     chassis.turnToHeading(180, 2000);
-    chassis.moveToPoint(-45, 18, 400);
-    chassis.moveToPoint(-45, 8, 1200, {.maxSpeed = 60});
-    chassis.moveToPoint(-45, 1, 1200, {.maxSpeed = 50});
+    chassis.moveToPoint(-46, 18, 400);
+    chassis.moveToPoint(-46, 8, 1200, {.maxSpeed = 60});
+    chassis.moveToPoint(-46, 1, 1200, {.maxSpeed = 50});
     // pros::delay(800);
     // // chassis.moveToPoint(70, 69, 300);
     // chassis.moveToPoint(-40, 60, 850, {.forwards = false});
@@ -138,7 +138,7 @@ void skillsAuton(){
     chassis.moveToPoint(-59, 2.5, 2000, {.forwards = false});
     pros::delay(500);
     clamp.set_value(false);
-    convVelocity = 0;
+
     // arm.move_velocity(0);
     // chassis.turnToHeading(-45, 700);
     // chassis.moveToPoint(-57, 15, 1300);
@@ -149,6 +149,10 @@ void skillsAuton(){
     // pros::delay(100);
   
     // // get ring 15 
+    chassis.moveToPose(-46, 107, 0,5000, {.lead = 0.5});
+    chassis.turnToHeading(-90, 2000);
+    convVelocity = 0;
+    chassis.moveToPose(5, 107, -90 , 3000, {.forwards = false, .lead = 0.5});
     // chassis.turnToHeading(5, 300);
     // convDir = STOP;
     // convDir = FIRST;
